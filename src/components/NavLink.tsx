@@ -1,55 +1,87 @@
-import { Link as RouterLink, NavLink as RouterNavLink, NavLinkProps } from "react-router-dom";
-import { forwardRef } from "react";
-import { cn } from "@/lib/utils";
+import {
+  Home,
+  Star,
+  Image,
+  LayoutGrid,
+  Calculator, // Ícone novo importado
+  PhoneCall,
+} from "lucide-react";
 
-interface NavLinkCompatProps extends Omit<NavLinkProps, "className"> {
-  className?: string;
-  activeClassName?: string;
-  pendingClassName?: string;
-  href?: string;
-}
+import logoVilaSonia from "@/assets/Logo-Estacao-pin-Vila-Sonia.svg";
 
-const NavLink = forwardRef<HTMLAnchorElement, NavLinkCompatProps>(
-  ({ className, activeClassName, pendingClassName, to, href, ...props }, ref) => {
-    // Se não houver 'to', usa o 'href'
-    const targetPath = to ? (typeof to === "string" ? to : to.pathname) : href;
-    const isAnchor = typeof targetPath === "string" && targetPath.startsWith("#");
+const Footer = () => {
+  const currentYear = new Date().getFullYear();
 
-    // Se for um link de âncora (#id)
-    if (isAnchor) {
-      return (
-        <a
-          ref={ref}
-          href={targetPath as string}
-          // ALTERAÇÃO AQUI: Adicionado "font-bold" para deixar o texto negrito
-          className={cn("font-bold", className)} 
-          {...props as React.AnchorHTMLAttributes<HTMLAnchorElement>}
-        >
-          {props.children}
-        </a>
-      );
-    }
+  return (
+    <footer className="bg-primary text-primary-foreground">
+      <div className="container mx-auto px-4 lg:px-8 py-16">
 
-    // Caso contrário, usa o RouterNavLink para navegação entre páginas
-    return (
-      <RouterNavLink
-        ref={ref}
-        to={to}
-        className={({ isActive, isPending }) =>
-          // ALTERAÇÃO AQUI: Adicionado "font-bold" no início da lista de classes
-          cn(
-            "font-bold", 
-            className, 
-            isActive && activeClassName, 
-            isPending && pendingClassName
-          )
-        }
-        {...props}
-      />
-    );
-  },
-);
+        {/* CONTEÚDO PRINCIPAL */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 place-items-center text-center">
 
-NavLink.displayName = "NavLink";
+          {/* BRAND + NAVEGAÇÃO */}
+          <div className="lg:col-span-3 flex flex-col items-center">
 
-export { NavLink };
+            {/* LOGO + TÍTULO */}
+            <div className="flex items-center justify-center gap-4 mb-6">
+              <img
+                src={logoVilaSonia}
+                alt="Vila Sônia Residence"
+                className="h-10 w-auto"
+              />
+
+              <h4 className="font-display font-semibold text-lg">
+                Informações
+              </h4>
+            </div>
+
+            {/* QUICK LINKS */}
+            <ul className="flex flex-col md:flex-row md:items-center md:justify-center gap-4 md:gap-6">
+              {[
+                { name: "Início", href: "#hero", icon: Home },
+                { name: "Diferenciais", href: "#features", icon: Star },
+                { name: "Galeria", href: "#gallery", icon: Image },
+                { name: "Plantas", href: "#floor-plans", icon: LayoutGrid },
+                // CORREÇÃO ABAIXO: Ícone Calculator e link #financiamento
+                { name: "Financiamento", href: "#financiamento", icon: Calculator },
+                { name: "Contato", href: "#contact", icon: PhoneCall },
+              ].map((link) => (
+                <li key={link.name}>
+                  <a
+                    href={link.href}
+                    className="inline-flex items-center justify-center gap-2 text-primary-foreground/70 hover:text-accent transition-colors"
+                  >
+                    <link.icon className="w-4 h-4 text-accent shrink-0" />
+                    <span className="font-medium">{link.name}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+
+          </div>
+
+          {/* COLUNA DE EQUILÍBRIO */}
+          <div />
+        </div>
+
+        {/* BOTTOM BAR — CENTRALIZADA */}
+        <div className="border-t border-primary-foreground/10 mt-12 pt-8 flex justify-center items-center text-sm relative">
+          <p className="text-primary-foreground/50 absolute left-1/2 transform -translate-x-1/2">
+            © {currentYear} Todos os direitos reservados.
+          </p>
+          <a
+            href="https://www.linkedin.com/in/david-santos-souza-130151260/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="ml-auto text-accent hover:underline font-medium"
+          >
+            Desenvolvido por David S.
+          </a>
+        </div>
+
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;

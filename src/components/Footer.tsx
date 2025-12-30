@@ -3,7 +3,7 @@ import {
   Star,
   Image,
   LayoutGrid,
-  MessageSquare,
+  Calculator, // Ícone novo importado
   PhoneCall,
 } from "lucide-react";
 
@@ -31,7 +31,7 @@ const Footer = () => {
               />
 
               <h4 className="font-display font-semibold text-lg">
-                         Informações
+                Informações
               </h4>
             </div>
 
@@ -42,7 +42,8 @@ const Footer = () => {
                 { name: "Diferenciais", href: "#features", icon: Star },
                 { name: "Galeria", href: "#gallery", icon: Image },
                 { name: "Plantas", href: "#floor-plans", icon: LayoutGrid },
-                { name: "Depoimentos", href: "#testimonials", icon: MessageSquare },
+                // CORREÇÃO ABAIXO: Ícone Calculator e link #financiamento
+                { name: "Financiamento", href: "#financiamento", icon: Calculator },
                 { name: "Contato", href: "#contact", icon: PhoneCall },
               ].map((link) => (
                 <li key={link.name}>
@@ -64,10 +65,18 @@ const Footer = () => {
         </div>
 
         {/* BOTTOM BAR — CENTRALIZADA */}
-        <div className="border-t border-primary-foreground/10 mt-12 pt-8 flex justify-center text-center">
-          <p className="text-primary-foreground/50 text-sm">
-            © {currentYear}  © 2025 Todos os direitos reservados.
+        <div className="border-t border-primary-foreground/10 mt-12 pt-8 flex justify-center items-center text-sm relative">
+          <p className="text-primary-foreground/50 absolute left-1/2 transform -translate-x-1/2">
+            © {currentYear} Todos os direitos reservados.
           </p>
+          <a
+            href="https://www.linkedin.com/in/david-santos-souza-130151260/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="ml-auto text-accent hover:underline font-medium"
+          >
+            Desenvolvido por David S.
+          </a>
         </div>
 
       </div>

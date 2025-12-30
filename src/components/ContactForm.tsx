@@ -117,7 +117,7 @@ const ContactForm = () => {
                 >
                   {isSubmitting ? "Enviando..." : (
                     <>
-                      Quero ser contactado
+                      Quero ser contactado(a)
                       <Send className="w-4 h-4 ml-2" />
                     </>
                   )}

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 import pinvsVideo from "../assets/videos/PINVS.mp4";
 import cooktopVideo from "../assets/videos/Cooktop.mp4";
@@ -18,6 +18,16 @@ const videos = [
 
 const Video = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  const nextVideo = () => {
+    if (activeIndex === null) return;
+    setActiveIndex((activeIndex + 1) % videos.length);
+  };
+
+  const prevVideo = () => {
+    if (activeIndex === null) return;
+    setActiveIndex(activeIndex === 0 ? videos.length - 1 : activeIndex - 1);
+  };
 
   return (
     <section id="videos" className="py-24 bg-[#cfeac3]">
@@ -85,26 +95,79 @@ const Video = () => {
             exit={{ opacity: 0 }}
             onClick={() => setActiveIndex(null)}
           >
-            {/* Botão fechar */}
+            {/* Botão fechar (mobile-first) */}
             <button
-              className="absolute top-6 right-6 z-60 text-primary-foreground/70 hover:text-primary-foreground"
+              className="fixed top-4 right-4 z-50 bg-black/40 backdrop-blur rounded-full p-3 text-white"
               onClick={(e) => {
                 e.stopPropagation();
                 setActiveIndex(null);
               }}
             >
-              <X className="w-8 h-8" />
+              <X className="w-6 h-6" />
             </button>
 
-            {/* Vídeo */}
+            {/* Vídeo com swipe */}
             <motion.video
+              key={activeIndex}
               src={videos[activeIndex].src}
               controls
               autoPlay
               playsInline
-              className="max-w-[90vw] max-h-[85vh] rounded-xl z-50"
+              className="w-full max-w-5xl max-h-[70vh] rounded-xl z-40"
+              initial={{ scale: 0.96 }}
+              animate={{ scale: 1 }}
               onClick={(e) => e.stopPropagation()}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              onDragEnd={(_, info) => {
+                if (info.offset.x < -100) nextVideo();
+                if (info.offset.x > 100) prevVideo();
+              }}
             />
+
+            {/* CONTROLES MOBILE */}
+            <div className="fixed bottom-6 left-0 right-0 flex justify-center gap-6 md:hidden">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  prevVideo();
+                }}
+                className="bg-black/50 backdrop-blur text-white p-4 rounded-full"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  nextVideo();
+                }}
+                className="bg-black/50 backdrop-blur text-white p-4 rounded-full"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* CONTROLES DESKTOP */}
+            <button
+              className="hidden md:flex absolute left-6 text-white/70 hover:text-white"
+              onClick={(e) => {
+                e.stopPropagation();
+                prevVideo();
+              }}
+            >
+              <ChevronLeft className="w-10 h-10" />
+            </button>
+
+            <button
+              className="hidden md:flex absolute right-6 text-white/70 hover:text-white"
+              onClick={(e) => {
+                e.stopPropagation();
+                nextVideo();
+              }}
+            >
+              <ChevronRight className="w-10 h-10" />
+            </button>
           </motion.div>
         )}
       </AnimatePresence>

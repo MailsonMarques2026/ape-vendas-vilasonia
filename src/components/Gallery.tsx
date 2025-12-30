@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
-/* ÁREA EXTERNA*/
+/* IMAGENS */
 import fachada from "@/assets/Gallery/fachada.gif"; 
 import bengalo from "@/assets/Gallery/Bengalo.gif";
 import churrasqueira from "@/assets/Gallery/Churrasqueira.gif";
@@ -12,7 +12,6 @@ import piscina from "@/assets/Gallery/piscina.gif";
 import playground from "@/assets/Gallery/playground.gif";
 import quadra from "@/assets/Gallery/quadra.gif";
 
-/* ÁREA INTERNA*/
 import academia from "@/assets/Gallery/Academia.gif";
 import bicicletario from "@/assets/Gallery/Bicicletario.gif";
 import brinquedoteca from "@/assets/Gallery/Brinquedoteca.gif";
@@ -29,7 +28,6 @@ import spa from "@/assets/Gallery/spa.gif";
 import sportBar from "@/assets/Gallery/sport-bar.gif";
 import jogos from "@/assets/Gallery/jogos.gif";
 
-/* ÁREA ROOFTOP*/
 import hidromassagem from "@/assets/Gallery/hidromassagem.gif";
 import rooftop from "@/assets/Gallery/rooftop.gif";
 
@@ -37,36 +35,34 @@ type Category = "externas" | "internas" | "rooftop";
 
 const galleryData = {
   externas: [
-    { src: fachada, title: "Fachada do Prédio" },
+    { src: fachada, title: "Fachada" },
     { src: bengalo, title: "Piscina com Raia" },
-    { src: churrasqueira, title: "Fachada" },
-    { src: crossfit, title: "Fachada" },
-    { src: petPlace, title: "Fachada" },
-    { src: piscina, title: "Fachada" },
-    { src: playground, title: "Fachada" },
-    { src: quadra, title: "Fachada" },
+    { src: churrasqueira, title: "Churrasqueira" },
+    { src: crossfit, title: "Espaço Crossfit" },
+    { src: petPlace, title: "Pet Place" },
+    { src: piscina, title: "Piscina" },
+    { src: playground, title: "Playground" },
+    { src: quadra, title: "Quadra Poliesportiva" },
   ],
-
   internas: [
-    { src: academia, title: "Cozinha Integrada" },
-    { src: bicicletario, title: "Quarto" },
-    { src: brinquedoteca, title: "Quarto" },
-    { src: coworking, title: "Quarto" },
-    { src: espacoBeleza, title: "Quarto" },
-    { src: delivery, title: "Quarto" },
-    { src: ioga, title: "Quarto" },
-    { src: lavanderia, title: "Quarto" },
-    { src: mercado, title: "Quarto" },
-    { src: petCare, title: "Quarto" },
-    { src: salaoDeFesta, title: "Quarto" },
-    { src: sauna, title: "Quarto" },
-    { src: spa, title: "Quarto" },
-    { src: sportBar, title: "Quarto" },
-    { src: jogos, title: "Quarto" },
+    { src: academia, title: "Academia" },
+    { src: bicicletario, title: "Bicicletário" },
+    { src: brinquedoteca, title: "Brinquedoteca" },
+    { src: coworking, title: "Coworking" },
+    { src: espacoBeleza, title: "Espaço Beleza" },
+    { src: delivery, title: "Delivery Room" },
+    { src: ioga, title: "Espaço Yoga" },
+    { src: lavanderia, title: "Lavanderia" },
+    { src: mercado, title: "Mercado" },
+    { src: petCare, title: "Pet Care" },
+    { src: salaoDeFesta, title: "Salão de Festas" },
+    { src: sauna, title: "Sauna" },
+    { src: spa, title: "Spa" },
+    { src: sportBar, title: "Sport Bar" },
+    { src: jogos, title: "Sala de Jogos" },
   ],
-
   rooftop: [
-     { src: hidromassagem, title: "Rooftop Gourmet" },
+    { src: hidromassagem, title: "Hidromassagem" },
     { src: rooftop, title: "Rooftop Gourmet" },
   ],
 };
@@ -77,20 +73,39 @@ const Gallery = () => {
 
   const images = galleryData[category];
 
+  const closeLightbox = () => setSelectedIndex(null);
+
+  const showPrev = () => {
+    setSelectedIndex((prev) =>
+      prev === null ? null : (prev - 1 + images.length) % images.length
+    );
+  };
+
+  const showNext = () => {
+    setSelectedIndex((prev) =>
+      prev === null ? null : (prev + 1) % images.length
+    );
+  };
+
+  /* Teclado */
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (selectedIndex === null) return;
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowLeft") showPrev();
+      if (e.key === "ArrowRight") showNext();
+    };
+
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [selectedIndex, images.length]);
+
   return (
     <section id="gallery" className="py-24 bg-white">
-      <div className="container mx-auto px-4 font-bold lg:px-8 flex flex-col lg:flex-row gap-12">
+      <div className="container mx-auto px-4 lg:px-8 flex flex-col lg:flex-row gap-12">
 
-        {/* MENU LATERAL */}
-        <aside
-          className="
-            lg:w-1/4 
-            flex lg:flex-col 
-            gap-4
-            overflow-x-auto lg:overflow-visible
-            pb-2 lg:pb-0
-          "
-        >
+        {/* MENU */}
+        <aside className="lg:w-1/4 flex lg:flex-col gap-4 overflow-x-auto">
           {[
             { key: "externas", label: "Áreas Externas" },
             { key: "internas", label: "Áreas Internas" },
@@ -99,42 +114,32 @@ const Gallery = () => {
             <button
               key={item.key}
               onClick={() => setCategory(item.key as Category)}
-              className={`
-                px-6 py-3 rounded-full border transition-all
-                whitespace-nowrap
-                ${
-                  category === item.key
-                    ? "bg-accent text-white border-accent"
-                    : "border-muted text-muted-foreground hover:border-accent"
-                }
-              `}
+              className={`px-6 py-3 rounded-full border transition-all whitespace-nowrap ${
+                category === item.key
+                  ? "bg-accent text-white border-accent"
+                  : "border-muted text-muted-foreground hover:border-accent"
+              }`}
             >
               {item.label}
             </button>
           ))}
         </aside>
 
-        {/* GRID DE IMAGENS */}
+        {/* GRID */}
         <div className="lg:w-3/4 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
           {images.map((image, index) => (
             <motion.button
-              key={index}
+              key={`${category}-${image.title}`}
               onClick={() => setSelectedIndex(index)}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="relative overflow-hidden rounded-2xl group h-[320px]"
+              className="relative overflow-hidden rounded-2xl h-[320px] group focus:outline-none focus:ring-2 focus:ring-accent"
             >
               <img
                 src={image.src}
                 alt={image.title}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
-
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-end">
-                <span className="p-5 text-white font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                  {image.title}
-                </span>
+              <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 flex items-end transition-opacity">
+                <span className="p-5 text-white font-medium">{image.title}</span>
               </div>
             </motion.button>
           ))}
@@ -149,22 +154,47 @@ const Gallery = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setSelectedIndex(null)}
+            onClick={closeLightbox}
           >
+            {/* FECHAR */}
             <button
+              onClick={closeLightbox}
               className="absolute top-6 right-6 text-white"
-              onClick={() => setSelectedIndex(null)}
             >
               <X size={32} />
             </button>
 
+            {/* ANTERIOR */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                showPrev();
+              }}
+              className="absolute left-6 text-white"
+            >
+              <ChevronLeft size={40} />
+            </button>
+
+            {/* IMAGEM */}
             <motion.img
               src={images[selectedIndex].src}
               alt={images[selectedIndex].title}
+              onClick={(e) => e.stopPropagation()}
               className="max-w-[90vw] max-h-[85vh] rounded-xl object-contain"
               initial={{ scale: 0.9 }}
               animate={{ scale: 1 }}
             />
+
+            {/* PRÓXIMA */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                showNext();
+              }}
+              className="absolute right-6 text-white"
+            >
+              <ChevronRight size={40} />
+            </button>
           </motion.div>
         )}
       </AnimatePresence>

@@ -82,27 +82,44 @@ const Hero = () => {
   initial={{ opacity: 0, y: 16 }}
   animate={{ opacity: 1, y: 0 }}
   transition={{ delay: 0.4 }}
-className="inline-block mb-8 mt-4 border-green-400/50 px-5 py-2 text-lg text-green-400" 
+  className="
+    inline-block
+    mb-8 mt-4
+    border border-green-400/50
+    bg-[#cfeac3]/70
+    px-6 py-4
+    rounded-xl
+  "
 >
   {[
-    { title: "Localização estratégica", size: "Rua Grauçá, 200 – Vila Sônia - A apenas 500m do metrô Vila Sônia - 10 min do Shopping Butantã - 20 min do Estádio MorumBIS."},
-    { size: ""},
-
-    
+    {
+      title: "Localização estratégica",
+      size:
+        "Rua Grauçá, 200 – Vila Sônia • 500m do metrô • 10 min do Shopping Butantã • 20 min do Estádio MorumBIS",
+    },
   ].map((item, index) => (
     <div
       key={index}
-      className="flex flex-col items-center text-center gap-2"
+      className="flex flex-col font-bold items-center text-center gap-2"
     >
-      <div className="text-lg md:text-xl font-semibold text-gold leading-tight">
+      {/* TÍTULO */}
+      <span className="text-sm uppercase tracking-wider text-green-600">
         {item.title}
-      </div>
-      <div className="text-sm text-primary-foreground/70">
+      </span>
+
+      {/* LOCALIZAÇÃO — DESTAQUE */}
+      <span className="
+        text-base md:text-lg
+        font-bold
+        text-green-700
+        
+      ">
         {item.size}
-      </div>
+      </span>
     </div>
   ))}
 </motion.div>
+
 
       </div>
     </section>
