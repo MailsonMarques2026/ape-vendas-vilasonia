@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Send, MapPin } from "lucide-react";
+import { Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
@@ -50,33 +50,33 @@ const ContactForm = () => {
   };
 
   return (
-    <section id="contact" className="py-24 bg-cream-dark">
+    <section id="contact" className="py-16 md:py-24 bg-cream-dark">
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
           {/* FORMULÁRIO */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
+            className="order-1"
           >
-            {/* CARD COM BACKGROUND DE DESTAQUE */}
-            <div className="bg-[#cfeac3] rounded-2xl p-8 shadow-soft">
+            <div className="bg-[#cfeac3] rounded-2xl p-6 sm:p-8 shadow-soft max-w-xl mx-auto">
 
               <span className="text-accent font-medium tracking-wider text-sm uppercase">
                 Contato
               </span>
 
-              <h2 className="font-display text-3xl md:text-4xl font-bold mt-3 mb-4">
+              <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold mt-3 mb-4">
                 Agende Sua Visita
               </h2>
 
-              <p className="text-muted-foreground mb-8">
+              <p className="text-muted-foreground mb-6">
                 Preencha o formulário e nossa equipe entrará em contato.
               </p>
 
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-5">
                 <Input
                   name="name"
                   placeholder="Seu nome completo"
@@ -110,10 +110,10 @@ const ContactForm = () => {
                   size="lg"
                   disabled={isSubmitting}
                   className="w-full h-14 bg-[#8dc63f] text-white
-                hover:bg-[#2f6f2f]
-                shadow-md shadow-[#8dc63f]/30
-                px-8 py-6 text-base font-bold
-                transition-colors"
+                    hover:bg-[#2f6f2f]
+                    shadow-md shadow-[#8dc63f]/30
+                    text-base font-bold
+                    transition-colors"
                 >
                   {isSubmitting ? "Enviando..." : (
                     <>
@@ -126,58 +126,34 @@ const ContactForm = () => {
             </div>
           </motion.div>
 
-          {/* INFO + MAPA */}
+          {/* MAPA */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="space-y-8"
+            className="order-2"
           >
-            <div className="bg-card rounded-2xl p-8 shadow-soft border border-border">
-              <h3 className="font-display text-xl font-semibold mb-6">
-                Informações de Contato
-              </h3>
-              <div className="flex gap-4">
-                <MapPin className="text-accent" />
-                <span>
-                  Rua Grauçá, 200 – Vila Sônia - São Paulo.
-                  <p>- A apenas 500m do metrô Vila Sônia</p>
-                  <p>- 10 min do Shopping Butantã</p>
-                  <p>- 20 min do Estádio MorumBIS</p>
-                </span>
-              </div>
-            </div>
-
-            <a
-              rel="noopener noreferrer"
-              className="group relative block rounded-2xl overflow-hidden border border-border bg-card shadow-soft"
-            >
+            <div className="rounded-2xl overflow-hidden border border-border bg-card shadow-soft max-w-xl mx-auto">
               <div className="relative aspect-video">
                 <iframe
                   src="https://www.google.com/maps?q=Rua+Grauçá,+200+-+Vila+Sônia,+São+Paulo+-+SP&output=embed"
-                  className="absolute inset-0 w-full h-full grayscale-[30%] group-hover:grayscale-0 transition-all duration-500 scale-100 group-hover:scale-105"
+                  className="absolute inset-0 w-full h-full grayscale-[30%]"
                   style={{ border: 0 }}
                   loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
                 />
               </div>
 
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-90" />
-
-              <div className="absolute bottom-0 left-0 right-0 p-5 flex items-center justify-between">
-                <div className="text-white">
-                  <p className="text-sm opacity-80">Endereço</p>
-                  <p className="font-semibold">
-                    Rua Grauçá, 200 – Vila Sônia
-                  </p>
-                  <p className="text-xs opacity-70">
-                    São Paulo – SP • 05626-020
-                  </p>
-                </div>
+              <div className="p-4 bg-black text-white">
+                <p className="text-sm opacity-80">Endereço</p>
+                <p className="font-semibold">
+                  Rua Grauçá, 200 – Vila Sônia
+                </p>
+                <p className="text-xs opacity-70">
+                  São Paulo – SP • 05626-020
+                </p>
               </div>
-            </a>
-
+            </div>
           </motion.div>
 
         </div>

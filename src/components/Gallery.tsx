@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 /* IMAGENS */
-import fachada from "@/assets/Gallery/fachada.gif"; 
+import fachada from "@/assets/Gallery/fachada.gif";
 import bengalo from "@/assets/Gallery/Bengalo.gif";
 import churrasqueira from "@/assets/Gallery/Churrasqueira.gif";
 import crossfit from "@/assets/Gallery/Crossfit.gif";
@@ -35,8 +35,8 @@ type Category = "externas" | "internas" | "rooftop";
 
 const galleryData = {
   externas: [
-    { src: fachada, title: "Fachada" },
-    { src: bengalo, title: "Piscina com Raia" },
+    { src: fachada, title: "Fachada 3D" },
+    { src: bengalo, title: "Bangalgo, Redário e Leitura" },
     { src: churrasqueira, title: "Churrasqueira" },
     { src: crossfit, title: "Espaço Crossfit" },
     { src: petPlace, title: "Pet Place" },
@@ -87,7 +87,6 @@ const Gallery = () => {
     );
   };
 
-  /* Teclado */
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (selectedIndex === null) return;
@@ -105,7 +104,7 @@ const Gallery = () => {
       <div className="container mx-auto px-4 lg:px-8 flex flex-col lg:flex-row gap-12">
 
         {/* MENU */}
-        <aside className="lg:w-1/4 flex lg:flex-col gap-4 overflow-x-auto">
+        <aside className="lg:w-1/4 flex flex-col sm:flex-row lg:flex-col gap-4">
           {[
             { key: "externas", label: "Áreas Externas" },
             { key: "internas", label: "Áreas Internas" },
@@ -114,7 +113,7 @@ const Gallery = () => {
             <button
               key={item.key}
               onClick={() => setCategory(item.key as Category)}
-              className={`px-6 py-3 rounded-full border transition-all whitespace-nowrap ${
+              className={`px-6 py-3 rounded-full border transition-all ${
                 category === item.key
                   ? "bg-accent text-white border-accent"
                   : "border-muted text-muted-foreground hover:border-accent"
@@ -131,15 +130,19 @@ const Gallery = () => {
             <motion.button
               key={`${category}-${image.title}`}
               onClick={() => setSelectedIndex(index)}
-              className="relative overflow-hidden rounded-2xl h-[320px] group focus:outline-none focus:ring-2 focus:ring-accent"
+              className="relative overflow-hidden rounded-2xl h-[320px] focus:outline-none focus:ring-2 focus:ring-accent"
             >
               <img
                 src={image.src}
                 alt={image.title}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
               />
-              <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 flex items-end transition-opacity">
-                <span className="p-5 text-white font-medium">{image.title}</span>
+
+              {/* OVERLAY FIXO */}
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent p-5">
+                <span className="text-white font-medium">
+                  {image.title}
+                </span>
               </div>
             </motion.button>
           ))}
@@ -156,7 +159,6 @@ const Gallery = () => {
             exit={{ opacity: 0 }}
             onClick={closeLightbox}
           >
-            {/* FECHAR */}
             <button
               onClick={closeLightbox}
               className="absolute top-6 right-6 text-white"
@@ -164,7 +166,6 @@ const Gallery = () => {
               <X size={32} />
             </button>
 
-            {/* ANTERIOR */}
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -175,7 +176,6 @@ const Gallery = () => {
               <ChevronLeft size={40} />
             </button>
 
-            {/* IMAGEM */}
             <motion.img
               src={images[selectedIndex].src}
               alt={images[selectedIndex].title}
@@ -185,7 +185,6 @@ const Gallery = () => {
               animate={{ scale: 1 }}
             />
 
-            {/* PRÓXIMA */}
             <button
               onClick={(e) => {
                 e.stopPropagation();

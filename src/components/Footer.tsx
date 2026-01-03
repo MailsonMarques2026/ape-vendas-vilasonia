@@ -3,7 +3,7 @@ import {
   Star,
   Image,
   LayoutGrid,
-  Calculator, // Ícone novo importado
+  Calculator,
   PhoneCall,
 } from "lucide-react";
 
@@ -42,7 +42,6 @@ const Footer = () => {
                 { name: "Diferenciais", href: "#features", icon: Star },
                 { name: "Galeria", href: "#gallery", icon: Image },
                 { name: "Plantas", href: "#floor-plans", icon: LayoutGrid },
-                // CORREÇÃO ABAIXO: Ícone Calculator e link #financiamento
                 { name: "Financiamento", href: "#financiamento", icon: Calculator },
                 { name: "Contato", href: "#contact", icon: PhoneCall },
               ].map((link) => (
@@ -60,23 +59,27 @@ const Footer = () => {
 
           </div>
 
-          {/* COLUNA DE EQUILÍBRIO */}
+          {/* COLUNA DE EQUILÍBRIO (Mantida conforme original) */}
           <div />
         </div>
 
-        {/* BOTTOM BAR — CENTRALIZADA */}
-        <div className="border-t border-primary-foreground/10 mt-12 pt-8 flex justify-center items-center text-sm relative">
-          <p className="text-primary-foreground/50 absolute left-1/2 transform -translate-x-1/2">
+        {/* BOTTOM BAR — ALTERADO AQUI */}
+        {/* Mudamos para flex-col para empilhar verticalmente */}
+        <div className="border-t border-primary-foreground/10 mt-12 pt-8 flex flex-col items-center justify-center text-sm gap-2">
+          
+          <p className="text-primary-foreground/50 text-center">
             © {currentYear} Todos os direitos reservados.
           </p>
+          
           <a
             href="https://www.linkedin.com/in/david-santos-souza-130151260/" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="ml-auto text-accent hover:underline font-medium"
+            className="text-accent hover:underline font-medium text-center"
           >
             Desenvolvido por David S.
           </a>
+
         </div>
 
       </div>
