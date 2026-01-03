@@ -30,9 +30,6 @@ const Footer = () => {
                 className="h-10 w-auto"
               />
 
-              <h4 className="font-display font-semibold text-lg">
-                Informações
-              </h4>
             </div>
 
             {/* QUICK LINKS */}
