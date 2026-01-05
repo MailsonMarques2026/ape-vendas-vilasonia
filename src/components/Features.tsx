@@ -65,7 +65,7 @@ const Features = () => {
           </h2>
 
           <p className="text-muted-foreground font-bold leading-relaxed">
-            Conheça os diferenciais que fazem do Vila Sônia Residence o lugar
+            Conheça os diferenciais que fazem de Pin Estação Vila Sônia o lugar
             ideal para viver com conforto, tecnologia e segurança.
           </p>
         </motion.div>

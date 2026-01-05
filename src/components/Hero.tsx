@@ -106,7 +106,11 @@ const Hero = () => {
     {
       title: "Localização estratégica",
       size:
-        "• Rua Grauçá, 200 a 500 metros do metrô Vila Sônia ",
+        "• Rua Grauçá, 200",
+    },
+    {
+      size:
+       "• 500 metros do metrô Vila Sônia ",
     },
     {
       size:

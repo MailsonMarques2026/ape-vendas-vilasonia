@@ -85,7 +85,7 @@ const ContactForm = () => {
                     A partir de
                   </p>
                   <p className="text-3xl font-bold text-foreground">
-                    R$ 244 mil
+                    R$ 201 mil
                   </p>
                 </div>
               </div>
