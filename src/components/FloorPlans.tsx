@@ -3,23 +3,37 @@ import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+/* IMAGENS */
 import PlantaDe17 from "@/assets/PLANTADE17M.png";
 import PlantaDe32 from "@/assets/PLANTADE32M.png";
 import PlantaDe35 from "@/assets/PLANTADE35M.png";
 import PlantaDe36 from "@/assets/PLANTADE36M.png";
 
-const plans = [
+/* TIPAGEM */
+type Plan = {
+  id: number;
+  name: string;
+  size: string;
+  bedrooms: number;
+  bathrooms: number;
+  balcony?: number;
+  image: string;
+  features: string[];
+};
+
+/* DADOS */
+const plans: Plan[] = [
   {
     id: 1,
     name: "Studio – Unidade R2V",
     size: "17 m²",
     bedrooms: 1,
     bathrooms: 1,
-    parking: 1,
     image: PlantaDe17,
     features: [
-      "Sem limitador de renda",
-      "A partir de R$ 200.500,00",
+      "Unidade R2V - Sem limitador de renda",
+      "A partir de R$ 201.000,00",
+      "Para renda a partir de R$ 3.000,00",
       "Ótima oportunidade para investir!",
       "Média de aluguel na região: R$ 2.000,00",
     ],
@@ -28,9 +42,9 @@ const plans = [
     id: 2,
     name: "Apto 1 dorm + office",
     size: "32m²",
-    bedrooms: 2,
-    bathrooms: 2,
-    parking: 1,
+    bedrooms: 1,
+    bathrooms: 1,
+    balcony: 1,
     image: PlantaDe32,
     features: [
       "Varanda",
@@ -39,7 +53,9 @@ const plans = [
       "Torneiras Aquecidas",
       "Ponto para automação com Alexa",
       "A partir de R$ 244.000,00",
-      "Preço promocional exclusivo",
+      "Preço promocional exclusivo válido até 31 de Janeiro",
+      "Para renda a partir de R$ 4.500,00",
+
     ],
   },
   {
@@ -48,7 +64,7 @@ const plans = [
     size: "35m²",
     bedrooms: 2,
     bathrooms: 1,
-    parking: 2,
+    balcony: 1,
     image: PlantaDe35,
     features: [
       "Ponto para Ar-Condicionado",
@@ -57,7 +73,8 @@ const plans = [
       "Ponto para automação com Alexa",
       "Churrasqueira a Gás na varanda",
       "A partir de R$ 264.000,00",
-      "Preço promocional exclusivo",
+      "Preço promocional exclusivo válido até 31 de Janeiro",
+      "Para renda a partir de R$ 5.000,00",
     ],
   },
   {
@@ -65,8 +82,8 @@ const plans = [
     name: "2 dorms com duas varandas",
     size: "36m²",
     bedrooms: 2,
-    bathrooms: 2,
-    parking: 2,
+    bathrooms: 1,
+    balcony: 2,
     image: PlantaDe36,
     features: [
       "Varanda na área de serviço",
@@ -77,16 +94,16 @@ const plans = [
       "Ponto para automação com Alexa",
       "Churrasqueira a Gás",
       "A partir de R$ 313.000,00",
-      "Preço promocional exclusivo",
+      "Para renda a partir de R$ 5.000,00",
     ],
   },
 ];
 
 const FloorPlans = () => {
-  const [activePlan, setActivePlan] = useState(plans[1]);
+  const [activePlan, setActivePlan] = useState<Plan>(plans[0]);
 
   const scrollToContact = () => {
-    const element = document.querySelector("#contact");
+    const element = document.getElementById("contact");
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
@@ -112,7 +129,7 @@ const FloorPlans = () => {
           </h2>
 
           <p className="text-muted-foreground font-bold">
-            Quatro opções de plantas para você escolher a que melhor se adapta a sua escolha.
+            Quatro opções de plantas para você escolher a que melhor se adapta à sua escolha.
           </p>
         </motion.div>
 
@@ -147,6 +164,8 @@ const FloorPlans = () => {
             <img
               src={activePlan.image}
               alt={`Planta ${activePlan.name}`}
+              loading="lazy"
+              decoding="async"
               className="w-full h-auto max-h-[400px] lg:max-h-[500px] object-contain mx-auto"
             />
           </div>
@@ -163,30 +182,45 @@ const FloorPlans = () => {
             </div>
 
             {/* STATS */}
-            <div className="grid grid-cols-3 gap-3 md:gap-6 mb-8">
-              {[
-                { label: "Quartos", value: activePlan.bedrooms },
-                { label: "Banhos", value: activePlan.bathrooms },
-                { label: "Vagas", value: activePlan.parking },
-              ].map((item) => (
-                <div
-                  key={item.label}
-                  className="text-center p-3 md:p-4 bg-secondary rounded-lg"
-                >
+            <div
+              className={`grid gap-3 md:gap-6 mb-8 ${
+                activePlan.balcony ? "grid-cols-3" : "grid-cols-2"
+              }`}
+            >
+              <div className="text-center p-3 md:p-4 bg-secondary rounded-lg">
+                <div className="font-display text-xl md:text-2xl font-bold text-foreground">
+                  {activePlan.bedrooms}
+                </div>
+                <div className="text-muted-foreground text-xs md:text-sm">
+                  Quartos
+                </div>
+              </div>
+
+              <div className="text-center p-3 md:p-4 bg-secondary rounded-lg">
+                <div className="font-display text-xl md:text-2xl font-bold text-foreground">
+                  {activePlan.bathrooms}
+                </div>
+                <div className="text-muted-foreground text-xs md:text-sm">
+                  Banhos
+                </div>
+              </div>
+
+              {activePlan.balcony && (
+                <div className="text-center p-3 md:p-4 bg-secondary rounded-lg">
                   <div className="font-display text-xl md:text-2xl font-bold text-foreground">
-                    {item.value}
+                    {activePlan.balcony}
                   </div>
                   <div className="text-muted-foreground text-xs md:text-sm">
-                    {item.label}
+                    Varanda
                   </div>
                 </div>
-              ))}
+              )}
             </div>
 
             {/* FEATURES */}
             <ul className="space-y-3 mb-8">
-              {activePlan.features.map((feature, index) => (
-                <li key={index} className="flex items-start gap-3">
+              {activePlan.features.map((feature) => (
+                <li key={feature} className="flex items-start gap-3">
                   <div className="mt-1 w-5 h-5 rounded-full bg-accent/20 flex items-center justify-center">
                     <Check className="w-3 h-3 text-accent" />
                   </div>
@@ -197,7 +231,7 @@ const FloorPlans = () => {
               ))}
             </ul>
 
-            {/* CTA VERDE CORRIGIDO */}
+            {/* CTA */}
             <Button
               onClick={scrollToContact}
               size="lg"

@@ -10,12 +10,12 @@ const ContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
     phone: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -25,18 +25,21 @@ const ContactForm = () => {
     try {
       const response = await fetch("https://formspree.io/f/xnjadaza", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
         body: JSON.stringify(formData),
       });
 
       if (response.ok) {
         toast({
           title: "Sucesso!",
-          description: "Mensagem enviada! Entraremos em contato em breve.",
+          description: "Entraremos em contato em breve.",
         });
-        setFormData({ name: "", email: "", phone: "" });
+        setFormData({ name: "", phone: "" });
       } else {
-        throw new Error("Erro ao enviar");
+        throw new Error();
       }
     } catch {
       toast({
@@ -60,7 +63,6 @@ const ContactForm = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="order-1"
           >
             <div className="bg-[#cfeac3] rounded-2xl p-6 sm:p-8 shadow-soft max-w-xl mx-auto">
 
@@ -68,7 +70,7 @@ const ContactForm = () => {
                 Contato
               </span>
 
-              <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold mt-3 mb-4">
+              <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold mt-3 mb-3">
                 Agende Sua Visita
               </h2>
 
@@ -76,6 +78,19 @@ const ContactForm = () => {
                 Preencha o formulário e nossa equipe entrará em contato.
               </p>
 
+              {/* DESTAQUE DE PREÇO */}
+              <div className="mb-8">
+                <div className="bg-white rounded-xl p-5 shadow-sm">
+                  <p className="text-xs text-muted-foreground mb-1">
+                    A partir de
+                  </p>
+                  <p className="text-3xl font-bold text-foreground">
+                    R$ 244 mil
+                  </p>
+                </div>
+              </div>
+
+              {/* FORM */}
               <form onSubmit={handleSubmit} className="space-y-5">
                 <Input
                   name="name"
@@ -84,25 +99,19 @@ const ContactForm = () => {
                   onChange={handleChange}
                   required
                   className="h-14"
-                />
-
-                <Input
-                  type="email"
-                  name="email"
-                  placeholder="Seu e-mail"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="h-14"
+                  aria-label="Nome completo"
                 />
 
                 <Input
                   name="phone"
+                  type="tel"
+                  inputMode="numeric"
                   placeholder="Seu telefone"
                   value={formData.phone}
                   onChange={handleChange}
                   required
                   className="h-14"
+                  aria-label="Telefone"
                 />
 
                 <Button
@@ -132,11 +141,11 @@ const ContactForm = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="order-2"
           >
             <div className="rounded-2xl overflow-hidden border border-border bg-card shadow-soft max-w-xl mx-auto">
               <div className="relative aspect-video">
                 <iframe
+                  title="Localização do empreendimento"
                   src="https://www.google.com/maps?q=Rua+Grauçá,+200+-+Vila+Sônia,+São+Paulo+-+SP&output=embed"
                   className="absolute inset-0 w-full h-full grayscale-[30%]"
                   style={{ border: 0 }}

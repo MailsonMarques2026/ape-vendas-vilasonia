@@ -74,9 +74,10 @@ const Testimonials = () => {
             {/* Lista com Checks Estilizados */}
             <ul className="space-y-4">
               {[
-                "Entrada facilitada",
+                "Entrada facilitada, podendo ser parcelada em 36 meses",
+                "Utilize FGTS como entrada",
                 "Parcelas que cabem no seu bolso",
-                "Uso do FGTS",
+                "Pode juntar renda com até 3 pessoas",
                 "Financiamento pela Caixa Econômica Federal"
               ].map((item, index) => (
                 <li key={index} className="flex items-center gap-3">

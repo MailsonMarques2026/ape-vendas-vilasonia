@@ -28,28 +28,40 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           className="inline-block mb-6 rounded-full border border-gold/40 px-5 py-2 text-sm text-[#8dc63f] font-bold tracking-wider text-sm uppercase"
         >
-          Lançamento Exclusivo em Vila Sônia
+          Lançamento Exclusivo na Vila Sônia
         </motion.span>
 
         <motion.h1
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="font-display text-4xl md:text-6xl font-bold text-primary-foreground mb-6"
+          className="font-display text-4xl md:text-5xl font-bold text-primary-foreground mb-6"
         >
-          Viva o Melhor com o Lugar
-          <span className="block text-gradient-gold mt-2">
-            Mais Completo da Região
-          </span>
+          Financiamos com Minha Casa Minha Vida.
+          
+        <span className="block text-[#8dc63f] font-extrabold drop-shadow-sm mt-2">
+          Preço promocional até 31 de Janeiro: à partir de 201.000,00!
+        </span>
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="max-w-2xl mx-auto text-lg text-primary-foreground/80 mb-10"
+          className="max-w-2xl mx-auto text-lg text-primary-foreground/80 md:text-3xl mb-10"
         >
-         Studios, 1 e 2 dormitórios ao lado do metrô Vila Sônia
+         
+        More a 500m do Metrô Vila Sônia no melhor condominio, tendo lazer de alto padrão com mais de 35 opções.
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="max-w-2xl mx-auto text-lg text-primary-foreground/80 md:text-3xl mb-10"
+        >
+         
+        Studios, 1 e 2 dormitórios ao lado do metrô Vila Sônia
         Lazer de alto padrão, diferenciais exclusivos e financiamento pela Caixa (Minha Casa MinhaVida)
         </motion.p>
 
@@ -95,8 +107,21 @@ const Hero = () => {
     {
       title: "Localização estratégica",
       size:
-        "Rua Grauçá, 200 – Vila Sônia • 500m do metrô • 10 min do Shopping Butantã • 20 min do Estádio MorumBIS",
+        "• Rua Grauçá, 200 a 500 metros do metrô Vila Sônia ",
     },
+    {
+      size:
+       "• 6 minutos do Parque Chácara Jockey",
+    },
+    {
+      size:
+       "• 10 minutos do Shopping Butantã", 
+    },
+    {
+       size:
+        "• 20 minutos do MorumBis •",
+    },  
+     
   ].map((item, index) => (
     <div
       key={index}

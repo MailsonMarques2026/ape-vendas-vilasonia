@@ -12,7 +12,7 @@ const videos = [
   },
   {
     src: cooktopVideo,
-    title: "Área de Lazer",
+    title: "Apartamento Decorado",
   },
 ];
 
