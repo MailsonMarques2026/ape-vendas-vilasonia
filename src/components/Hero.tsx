@@ -61,8 +61,7 @@ const Hero = () => {
           className="max-w-2xl mx-auto text-lg text-primary-foreground/80 md:text-3xl mb-10"
         >
          
-        Studios, 1 e 2 dormitórios ao lado do metrô Vila Sônia
-        Lazer de alto padrão, diferenciais exclusivos e financiamento pela Caixa (Minha Casa MinhaVida)
+        Studios, 1 e 2 dormitórios ao lado do metrô Vila Sônia, diferenciais exclusivos e financiamento pela Caixa (Minha Casa MinhaVida)
         </motion.p>
 
         {/* Buttons */}
