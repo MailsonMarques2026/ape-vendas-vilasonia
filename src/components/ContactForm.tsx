@@ -18,38 +18,14 @@ const ContactForm = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setIsSubmitting(true);
+    toast({
+      title: "Enviando...",
+      description: "Aguarde um instante.",
+    });
 
-    try {
-      const response = await fetch("https://formspree.io/f/xnjadaza", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        toast({
-          title: "Sucesso!",
-          description: "Entraremos em contato em breve.",
-        });
-        setFormData({ name: "", phone: "" });
-      } else {
-        throw new Error();
-      }
-    } catch {
-      toast({
-        variant: "destructive",
-        title: "Erro",
-        description: "Não foi possível enviar. Tente novamente.",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+    // deixa o FormSubmit fazer o envio naturalmente
   };
 
   return (
@@ -91,7 +67,17 @@ const ContactForm = () => {
               </div>
 
               {/* FORM */}
-              <form onSubmit={handleSubmit} className="space-y-5">
+              <form
+                action="https://formsubmit.co/corretor.mailsonmarques@gmail.com"
+                method="POST"
+                onSubmit={handleSubmit}
+                className="space-y-5"
+              >
+                {/* Configuração formsubmit */}
+                <input type="hidden" name="_captcha" value="false" />
+                <input type="hidden" name="_confirm" value="false" />
+                <input type="hidden" name="_template" value="table" />
+
                 <Input
                   name="name"
                   placeholder="Seu nome completo"
@@ -124,7 +110,9 @@ const ContactForm = () => {
                     text-base font-bold
                     transition-colors"
                 >
-                  {isSubmitting ? "Enviando..." : (
+                  {isSubmitting ? (
+                    "Enviando..."
+                  ) : (
                     <>
                       Quero ser contactado(a)
                       <Send className="w-4 h-4 ml-2" />
