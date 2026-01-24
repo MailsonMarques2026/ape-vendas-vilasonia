@@ -8,7 +8,7 @@ import cooktopVideo from "../assets/videos/Cooktop.mp4";
 const videos = [
   {
     src: pinvsVideo,
-    title: "Vídeo de Apresentação",
+    title: "Vídeo de Apresentação PIN",
   },
   {
     src: cooktopVideo,
