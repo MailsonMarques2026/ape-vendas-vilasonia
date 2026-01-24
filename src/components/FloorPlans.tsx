@@ -52,7 +52,7 @@ const plans: Plan[] = [
       "Chuveiro a Gás",
       "Torneiras Aquecidas",
       "Ponto para automação com Alexa",
-      "A partir de R$ 244.000,00",
+      "A partir de R$ 247.000,00",
       "Preço promocional exclusivo válido até 31 de Janeiro",
       "Para renda a partir de R$ 4.500,00",
 
@@ -72,7 +72,7 @@ const plans: Plan[] = [
       "Torneiras Aquecidas",
       "Ponto para automação com Alexa",
       "Churrasqueira a Gás na varanda",
-      "A partir de R$ 264.000,00",
+      "A partir de R$ 267.000,00",
       "Preço promocional exclusivo válido até 31 de Janeiro",
       "Para renda a partir de R$ 5.000,00",
     ],
